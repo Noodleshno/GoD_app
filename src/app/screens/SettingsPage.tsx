@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { CyberButton } from "../components/CyberButton";
 import { useSettings } from "../SettingsContext";
-import { ChevronLeft, Globe, Gamepad2, Volume2, Shield, User, Smartphone } from "lucide-react";
+import { ChevronLeft, Globe, Gamepad2, Volume2, Shield, User, Smartphone, Volume, VolumeX } from "lucide-react";
 import { CyberInput } from "../components/CyberInput";
+import { Slider } from "../components/ui/slider";
 
 export function SettingsPage() {
   const navigate = useNavigate();
@@ -15,6 +16,10 @@ export function SettingsPage() {
 
   const [activeTab, setActiveTab] = useState("controls");
   const [newUsername, setNewUsername] = useState(username);
+  const [masterVolume, setMasterVolume] = useState([70]);
+  const [musicVolume, setMusicVolume] = useState([60]);
+  const [sfxVolume, setSfxVolume] = useState([80]);
+  const [voiceVolume, setVoiceVolume] = useState([75]);
 
   const tabs = [
     { id: "controls", label: "Controls", icon: <Gamepad2 className="w-4 h-4" /> },
@@ -132,14 +137,14 @@ export function SettingsPage() {
           {activeTab === "account" && (
             <div className="flex flex-col gap-6 animate-in fade-in duration-300">
               <div className="flex flex-col gap-2">
-                <h3 className="text-lg font-display uppercase text-white tracking-widest">Pilot Profile</h3>
+                <h3 className="text-lg font-display uppercase text-white tracking-widest">Profile</h3>
                 <p className="text-xs text-muted-foreground font-sans">
                   Manage your public identity.
                 </p>
               </div>
 
               <div className="flex flex-col gap-3 max-w-sm">
-                <label className="text-xs text-muted-foreground font-display uppercase">Callsign</label>
+                <label className="text-xs text-muted-foreground font-display uppercase">Nickname</label>
                 <div className="flex gap-2">
                   <CyberInput 
                     value={newUsername}
@@ -165,8 +170,103 @@ export function SettingsPage() {
             </div>
           )}
 
-          {/* Placeholders for Audio / Privacy */}
-          {(activeTab === "audio" || activeTab === "privacy") && (
+          {activeTab === "audio" && (
+            <div className="flex flex-col gap-6 animate-in fade-in duration-300">
+              <div className="flex flex-col gap-2">
+                <h3 className="text-lg font-display uppercase text-white tracking-widest">Audio Settings</h3>
+                <p className="text-xs text-muted-foreground font-sans">
+                  Adjust volume levels for different audio channels.
+                </p>
+              </div>
+
+              <div className="bg-black/50 border border-white/10 rounded-xl p-6 flex flex-col gap-6 max-w-sm">
+                {/* Master Volume */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-display text-white uppercase">Master Volume</label>
+                    <span className="text-xs font-display text-primary">{masterVolume[0]}%</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <VolumeX className="w-4 h-4 text-muted-foreground" />
+                    <Slider 
+                      value={masterVolume}
+                      onValueChange={setMasterVolume}
+                      max={100}
+                      step={1}
+                      className="flex-1"
+                    />
+                    <Volume2 className="w-4 h-4 text-primary" />
+                  </div>
+                </div>
+
+                <div className="h-[1px] bg-white/10 w-full"></div>
+
+                {/* Music Volume */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-display text-white uppercase">Music</label>
+                    <span className="text-xs font-display text-accent">{musicVolume[0]}%</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <VolumeX className="w-4 h-4 text-muted-foreground" />
+                    <Slider 
+                      value={musicVolume}
+                      onValueChange={setMusicVolume}
+                      max={100}
+                      step={1}
+                      className="flex-1"
+                    />
+                    <Volume2 className="w-4 h-4 text-accent" />
+                  </div>
+                </div>
+
+                <div className="h-[1px] bg-white/10 w-full"></div>
+
+                {/* SFX Volume */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-display text-white uppercase">Sound Effects</label>
+                    <span className="text-xs font-display text-yellow-500">{sfxVolume[0]}%</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <VolumeX className="w-4 h-4 text-muted-foreground" />
+                    <Slider 
+                      value={sfxVolume}
+                      onValueChange={setSfxVolume}
+                      max={100}
+                      step={1}
+                      className="flex-1"
+                    />
+                    <Volume2 className="w-4 h-4 text-yellow-500" />
+                  </div>
+                </div>
+
+                <div className="h-[1px] bg-white/10 w-full"></div>
+
+                {/* Voice Volume */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-display text-white uppercase">Voice Chat</label>
+                    <span className="text-xs font-display text-green-400">{voiceVolume[0]}%</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <VolumeX className="w-4 h-4 text-muted-foreground" />
+                    <Slider 
+                      value={voiceVolume}
+                      onValueChange={setVoiceVolume}
+                      max={100}
+                      step={1}
+                      className="flex-1"
+                    />
+                    <Volume2 className="w-4 h-4 text-green-400" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Placeholders for Privacy */}
+          {activeTab === "privacy" && (
             <div className="flex flex-col gap-4 items-center justify-center h-full text-center opacity-50 animate-in fade-in duration-300">
               <Shield className="w-12 h-12 text-muted-foreground mb-2" />
               <h3 className="text-sm font-display text-white uppercase tracking-widest">Module Offline</h3>

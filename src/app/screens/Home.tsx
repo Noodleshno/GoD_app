@@ -11,9 +11,7 @@ import { useSettings } from "../SettingsContext";
 import profilePlaceholder from "@/assets/images/profile/placeholder-user.jpg";
 
 const PROMO_CODES = {
-  GOD500: { message: "500 G added to your pilot wallet.", coins: 500 },
-  FREEGAME: { message: "Free 15m session unlocked.", coins: 0 },
-  PILOT10: { message: "10% discount applied to your next booking.", coins: 0 },
+  GOD500: { message: "500 G added to your pilot wallet.", coins: 500 }
 };
 
 export function Home() {

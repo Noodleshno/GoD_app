@@ -148,32 +148,32 @@ export function Profile() {
 
       {/* Level Up Modal (Test) */}
       {showLevelUp && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
-          <div className="w-full max-w-md bg-background border-2 border-accent rounded-2xl shadow-[0_0_50px_rgba(236,72,153,0.3)] overflow-hidden flex flex-col text-center relative pointer-events-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="w-full h-auto max-w-md max-h-[90vh] bg-background border-2 border-accent rounded-2xl shadow-[0_0_50px_rgba(236,72,153,0.3)] overflow-y-auto flex flex-col text-center relative pointer-events-auto sm:max-w-sm md:max-w-md">
             {/* Confetti / Glow effects */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-accent/20 blur-[100px] rounded-full pointer-events-none"></div>
             
-            <div className="p-8 flex flex-col items-center gap-4 relative z-10">
-              <div className="w-20 h-20 bg-accent/20 border-2 border-accent rounded-full flex items-center justify-center text-accent mb-2 shadow-[0_0_30px_rgba(236,72,153,0.5)] animate-bounce">
-                <Target className="w-10 h-10" />
+            <div className="p-6 sm:p-8 flex flex-col items-center gap-4 relative z-10">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-accent/20 border-2 border-accent rounded-full flex items-center justify-center text-accent mb-2 shadow-[0_0_30px_rgba(236,72,153,0.5)] animate-bounce shrink-0">
+                <Target className="w-8 h-8 sm:w-10 sm:h-10" />
               </div>
               
-              <h2 className="text-3xl font-display font-black text-white uppercase tracking-widest">Level Up!</h2>
-              <p className="text-lg font-display text-accent uppercase tracking-wider">You are now a <span className="text-white font-black">{rank}</span></p>
+              <h2 className="text-2xl sm:text-3xl font-display font-black text-white uppercase tracking-widest">Level Up!</h2>
+              <p className="text-base sm:text-lg font-display text-accent uppercase tracking-wider">You are now a <span className="text-white font-black">{rank}</span></p>
               
-              <div className="bg-black/50 border border-white/10 rounded-lg p-4 w-full mt-4 flex flex-col gap-2">
+              <div className="bg-black/50 border border-white/10 rounded-lg p-4 w-full mt-2 sm:mt-4 flex flex-col gap-2">
                 <span className="text-xs text-muted-foreground font-display uppercase tracking-widest mb-2">Rewards Unlocked</span>
-                <div className="flex justify-between items-center text-sm">
+                <div className="flex justify-between items-center text-xs sm:text-sm gap-2">
                   <span className="text-white font-sans">Virtual Currency</span>
                   <span className="font-display font-black text-yellow-500">1,000 G</span>
                 </div>
-                <div className="flex justify-between items-center text-sm">
+                <div className="flex justify-between items-center text-xs sm:text-sm gap-2">
                   <span className="text-white font-sans">Profile Badge</span>
                   <span className="font-display font-black text-primary">"Pilot" Status</span>
                 </div>
               </div>
 
-              <CyberButton onClick={() => setShowLevelUp(false)} className="w-full mt-6 py-3">
+              <CyberButton onClick={() => setShowLevelUp(false)} className="w-full mt-4 sm:mt-6 py-2 sm:py-3 text-sm">
                 Claim Rewards
               </CyberButton>
             </div>
