@@ -149,7 +149,7 @@ export function Profile() {
       {/* Level Up Modal (Test) */}
       {showLevelUp && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="w-full h-auto max-w-md max-h-[90vh] bg-background border-2 border-accent rounded-2xl shadow-[0_0_50px_rgba(236,72,153,0.3)] overflow-y-auto flex flex-col text-center relative pointer-events-auto sm:max-w-sm md:max-w-md">
+          <div className="w-full h-auto max-w-md max-h-[90vh] bg-background border-2 border-accent rounded-2xl shadow-[0_0_50px_rgba(236,72,153,0.3)] overflow-y-auto scrollbar-hide flex flex-col text-center relative pointer-events-auto sm:max-w-sm md:max-w-md">
             {/* Confetti / Glow effects */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-accent/20 blur-[100px] rounded-full pointer-events-none"></div>
             

@@ -53,7 +53,7 @@ export function Onboarding() {
 
       <button 
         onClick={completeOnboarding}
-        className="absolute top-4 right-8 z-20 text-xs font-display text-muted-foreground hover:text-white uppercase tracking-widest"
+        className="absolute top-4 right-8 z-[9999] text-xs font-display text-muted-foreground hover:text-white uppercase tracking-widest"
       >
         Skip
       </button>
