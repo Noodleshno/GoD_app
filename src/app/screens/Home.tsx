@@ -23,6 +23,7 @@ export function Home() {
   const [showSupport, setShowSupport] = useState(false);
   const [showPrizePool, setShowPrizePool] = useState(false);
   const [showPromoCode, setShowPromoCode] = useState(false);
+  const [prizeTab, setPrizeTab] = useState<"daily" | "weekly" | "monthly">("daily");
   const [promoCode, setPromoCode] = useState("");
   const [promoResult, setPromoResult] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
@@ -253,17 +254,47 @@ export function Home() {
             </div>
             <div className="p-3 flex flex-col gap-3 h-[250px] overflow-y-auto scrollbar-hide">
               <div className="flex p-1 bg-black/50 rounded-lg border border-white/10 shrink-0">
-                <button className="flex-1 py-1 text-[10px] font-display text-white bg-yellow-500/20 border border-yellow-500/50 rounded">Daily</button>
-                <button className="flex-1 py-1 text-[10px] font-display text-muted-foreground hover:text-white">Weekly</button>
-                <button className="flex-1 py-1 text-[10px] font-display text-muted-foreground hover:text-white">Monthly</button>
+                {[
+                  { id: "daily", label: "Daily" },
+                  { id: "weekly", label: "Weekly" },
+                  { id: "monthly", label: "Monthly" },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setPrizeTab(tab.id as "daily" | "weekly" | "monthly")}
+                    className={`flex-1 py-1 text-[10px] font-display rounded ${prizeTab === tab.id
+                      ? "text-white bg-yellow-500/20 border border-yellow-500/50"
+                      : "text-muted-foreground hover:text-white"}`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
               </div>
               
-              <div className="text-center py-2 shrink-0">
-                <p className="text-2xl font-display font-black text-yellow-500 drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]">
-                  1,500 G
-                </p>
-                <p className="text-[10px] text-muted-foreground mt-1">Current Daily Fund</p>
-              </div>
+              {prizeTab === "daily" && (
+                <div className="text-center py-2 shrink-0">
+                  <p className="text-2xl font-display font-black text-yellow-500 drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]">
+                    1,500 G
+                  </p>
+                  <p className="text-[10px] text-muted-foreground mt-1">Current Daily Fund</p>
+                </div>
+              )}
+              {prizeTab === "weekly" && (
+                <div className="text-center py-2 shrink-0">
+                  <p className="text-2xl font-display font-black text-yellow-500 drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]">
+                    10,500 G
+                  </p>
+                  <p className="text-[10px] text-muted-foreground mt-1">Current Weekly Fund</p>
+                </div>
+              )}
+              {prizeTab === "monthly" && (
+                <div className="text-center py-2 shrink-0">
+                  <p className="text-2xl font-display font-black text-yellow-500 drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]">
+                    45,000 G
+                  </p>
+                  <p className="text-[10px] text-muted-foreground mt-1">Current Monthly Fund</p>
+                </div>
+              )}
 
               <div className="flex flex-col gap-2">
                 {[1, 2, 3].map((place) => (

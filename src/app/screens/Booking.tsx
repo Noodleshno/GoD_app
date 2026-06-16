@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { CyberButton } from "../components/CyberButton";
-import { AlertCircle, CheckCircle2, ChevronLeft, RefreshCw, Calendar, Clock, MapPin, Play, Zap } from "lucide-react";
+import { AlertCircle, CheckCircle2, ChevronLeft, RefreshCw, Calendar, Clock, Play, Zap } from "lucide-react";
 import { useSettings } from "../SettingsContext";
 
 interface BookingActivity {
@@ -10,14 +10,12 @@ interface BookingActivity {
   desc: string;
   cost: string;
   duration: string;
-  track: string;
 }
 
 interface ReservationDetails {
   id: string;
   title: string;
   time: string;
-  track: string;
   cost: string;
 }
 
@@ -35,7 +33,6 @@ export function Booking() {
     desc: "Fast access to the next available drone session.",
     cost: "500 G",
     duration: "15m",
-    track: "Alpha Sector",
   };
   const activityCost = Number.parseInt(activity.cost, 10) || 0;
   const activityKey = activity.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -65,8 +62,8 @@ export function Booking() {
     }
   }, [reservationDetails, reservationStorageKey]);
 
-  const reserveSlot = (time: string, track: string) => {
-    const slotId = `${time}-${track}`;
+  const reserveSlot = (time: string) => {
+    const slotId = `${time}`;
 
     if (reservedSlots.includes(slotId)) {
       return;
@@ -87,12 +84,11 @@ export function Booking() {
       id: slotId,
       title: activity.title,
       time,
-      track,
       cost: activity.cost,
     });
     setBookingResult({
       type: "success",
-      message: `${activity.title} reserved at ${time} on ${track}.`,
+      message: `${activity.title} reserved at ${time}.`,
     });
     setShowConfirmation(true);
   };
@@ -139,14 +135,10 @@ export function Booking() {
             </div>
 
             <div className="w-7/12 p-6 flex flex-col justify-center gap-4 relative z-10">
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-lg border border-white/10 bg-black/40 p-3">
                   <span className="text-[10px] text-muted-foreground font-sans">Time</span>
                   <div className="text-xl font-display font-bold text-white">{reservationDetails.time}</div>
-                </div>
-                <div className="rounded-lg border border-white/10 bg-black/40 p-3">
-                  <span className="text-[10px] text-muted-foreground font-sans">Track</span>
-                  <div className="text-sm font-display font-bold text-white truncate">{reservationDetails.track}</div>
                 </div>
                 <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-3">
                   <span className="text-[10px] text-muted-foreground font-sans">Paid</span>
@@ -234,13 +226,12 @@ export function Booking() {
           
           <div className="flex-1 overflow-y-auto scrollbar-hide flex flex-col gap-2">
             {[
-              { time: "18:00", available: 12, status: "open", track: "Alpha Sector" },
-              { time: "18:30", available: 5, status: "filling", track: "Neon Ring" },
-              { time: "19:00", available: 0, status: "full", track: "Underground" },
-              { time: "19:30", available: 12, status: "open", track: "Alpha Sector" },
+              { time: "18:00", available: 12, status: "open" },
+              { time: "18:30", available: 5, status: "filling" },
+              { time: "19:00", available: 0, status: "full" },
+              { time: "19:30", available: 12, status: "open" },
             ].map((slot, idx) => {
-              const track = idx === 0 ? activity.track : slot.track;
-              const slotId = `${slot.time}-${track}`;
+              const slotId = `${slot.time}`;
               const isReserved = reservedSlots.includes(slotId);
               const isDisabled = slot.status === "full" || isReserved;
 
@@ -253,9 +244,6 @@ export function Booking() {
                 <div className="flex items-center gap-4">
                   <div className="text-2xl font-display font-bold text-white w-16">{slot.time}</div>
                   <div className="flex flex-col">
-                    <span className="text-xs text-muted-foreground flex items-center gap-1">
-                      <MapPin className="w-3 h-3" /> {track}
-                    </span>
                     <span className={`text-xs font-display font-bold uppercase ${slot.available > 0 ? 'text-primary' : 'text-destructive'}`}>
                       {isReserved ? "Reserved" : `${slot.available} drones`}
                     </span>
@@ -266,7 +254,7 @@ export function Booking() {
                   disabled={isDisabled}
                   className={`w-32 h-8 text-xs py-0 ${isDisabled ? "opacity-60 cursor-not-allowed border-white/10" : ""}`}
                   glow={!isDisabled}
-                  onClick={() => reserveSlot(slot.time, track)}
+                  onClick={() => reserveSlot(slot.time)}
                 >
                   {isReserved ? "Reserved" : slot.status === "full" ? "Sector Full" : "Reserve"}
                 </CyberButton>
