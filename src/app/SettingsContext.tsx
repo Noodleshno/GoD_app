@@ -6,6 +6,12 @@ interface SettingsContextType {
   setUsername: (name: string) => void;
   swapControls: boolean;
   setSwapControls: (swap: boolean) => void;
+  controlMode: "buttons" | "joystick";
+  setControlMode: (mode: "buttons" | "joystick") => void;
+  steerControlType: "buttons" | "joystick";
+  setSteerControlType: (mode: "buttons" | "joystick") => void;
+  throttleControlType: "buttons" | "joystick";
+  setThrottleControlType: (mode: "buttons" | "joystick") => void;
   resetControls: () => void;
   lang: string;
   setLang: (lang: string) => void;
@@ -36,6 +42,23 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     return localStorage.getItem("god_swap_controls") === "true";
   });
 
+  const [controlMode, setControlMode] = useState<"buttons" | "joystick">(() => {
+    const stored = localStorage.getItem("god_control_mode");
+    return stored === "joystick" ? "joystick" : "buttons";
+  });
+
+  const [steerControlType, setSteerControlType] = useState<"buttons" | "joystick">(() => {
+    const stored = localStorage.getItem("god_steer_control_type");
+    if (stored === "buttons" || stored === "joystick") return stored;
+    return localStorage.getItem("god_control_mode") === "joystick" ? "joystick" : "buttons";
+  });
+
+  const [throttleControlType, setThrottleControlType] = useState<"buttons" | "joystick">(() => {
+    const stored = localStorage.getItem("god_throttle_control_type");
+    if (stored === "buttons" || stored === "joystick") return stored;
+    return localStorage.getItem("god_control_mode") === "joystick" ? "joystick" : "buttons";
+  });
+
   const [lang, setLang] = useState(() => {
     return localStorage.getItem("god_lang") || "EN";
   });
@@ -62,6 +85,18 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   }, [swapControls]);
 
   useEffect(() => {
+    localStorage.setItem("god_control_mode", controlMode);
+  }, [controlMode]);
+
+  useEffect(() => {
+    localStorage.setItem("god_steer_control_type", steerControlType);
+  }, [steerControlType]);
+
+  useEffect(() => {
+    localStorage.setItem("god_throttle_control_type", throttleControlType);
+  }, [throttleControlType]);
+
+  useEffect(() => {
     localStorage.setItem("god_lang", lang);
   }, [lang]);
 
@@ -75,6 +110,9 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
 
   const resetControls = () => {
     setSwapControls(false);
+    setControlMode("buttons");
+    setSteerControlType("buttons");
+    setThrottleControlType("buttons");
   };
 
   const addWalletBalance = (amount: number) => {
@@ -106,6 +144,9 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     <SettingsContext.Provider value={{ 
       username, setUsername, 
       swapControls, setSwapControls, resetControls,
+      controlMode, setControlMode,
+      steerControlType, setSteerControlType,
+      throttleControlType, setThrottleControlType,
       lang, setLang,
       level, rank, xp, maxXp,
       totalGames, bestResult, globalRank, clubMemberSince, gamesToNextLevel,

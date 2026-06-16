@@ -11,6 +11,8 @@ export function SettingsPage() {
   const { 
     username, setUsername, 
     swapControls, setSwapControls, resetControls,
+    steerControlType, setSteerControlType,
+    throttleControlType, setThrottleControlType,
     lang, setLang 
   } = useSettings();
 
@@ -20,6 +22,7 @@ export function SettingsPage() {
   const [musicVolume, setMusicVolume] = useState([60]);
   const [sfxVolume, setSfxVolume] = useState([80]);
   const [voiceVolume, setVoiceVolume] = useState([75]);
+  const [controlSpeed, setControlSpeed] = useState([100]);
 
   const tabs = [
     { id: "controls", label: "Controls", icon: <Gamepad2 className="w-4 h-4" /> },
@@ -67,7 +70,7 @@ export function SettingsPage() {
               <div className="flex flex-col gap-2">
                 <h3 className="text-lg font-display uppercase text-white tracking-widest">Layout Configuration</h3>
                 <p className="text-xs text-muted-foreground font-sans">
-                  Optimize your touchscreen layout for landscape ergonomics. Changes apply instantly to gameplay.
+                  Changes apply instantly to gameplay.
                 </p>
               </div>
 
@@ -89,16 +92,80 @@ export function SettingsPage() {
                   </button>
                 </div>
 
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-col">
+                      <span className="text-sm font-display text-white">Turn Input</span>
+                      <span className="text-xs text-muted-foreground font-sans mt-1 max-w-[200px]">
+                        Choose how you steer: buttons or joystick.
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      {[
+                        { mode: "buttons", label: "Buttons" },
+                        { mode: "joystick", label: "Joystick" },
+                      ].map(option => (
+                        <button
+                          key={option.mode}
+                          onClick={() => setSteerControlType(option.mode as "buttons" | "joystick")}
+                          className={`px-3 py-2 rounded-lg text-xs transition ${steerControlType === option.mode 
+                            ? 'bg-primary/20 border border-primary text-white' 
+                            : 'bg-white/5 border border-white/10 text-muted-foreground hover:text-white'}`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-col">
+                      <span className="text-sm font-display text-white">Speed Input</span>
+                      <span className="text-xs text-muted-foreground font-sans mt-1 max-w-[200px]">
+                        Choose how you control throttle: buttons or joystick.
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      {[
+                        { mode: "buttons", label: "Buttons" },
+                        { mode: "joystick", label: "Joystick" },
+                      ].map(option => (
+                        <button
+                          key={option.mode}
+                          onClick={() => setThrottleControlType(option.mode as "buttons" | "joystick")}
+                          className={`px-3 py-2 rounded-lg text-xs transition ${throttleControlType === option.mode 
+                            ? 'bg-primary/20 border border-primary text-white' 
+                            : 'bg-white/5 border border-white/10 text-muted-foreground hover:text-white'}`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
                 <div className="h-[1px] bg-white/10 w-full my-2"></div>
 
-                <div className="flex items-center justify-between opacity-50 pointer-events-none">
+                <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-sm font-display text-white">Control Scale</span>
-                    <span className="text-xs text-muted-foreground font-sans mt-1">Adjust size of virtual buttons</span>
+                    <span className="text-sm font-display text-white">Speed</span>
+                    <span className="text-xs text-muted-foreground font-sans mt-1">Adjust control response speed</span>
                   </div>
-                  <span className="text-xs text-white">100%</span>
+                  <span className="text-xs font-display text-primary">{controlSpeed[0]}%</span>
                 </div>
-                
+
+                <div className="flex items-center gap-3 mt-2">
+                  <span className="text-xs text-muted-foreground">0%</span>
+                  <Slider 
+                    value={controlSpeed}
+                    onValueChange={setControlSpeed}
+                    max={100}
+                    step={1}
+                    className="flex-1"
+                  />
+                  <span className="text-xs text-muted-foreground">100%</span>
+                </div>
+                           
                 <CyberButton variant="ghost" onClick={resetControls} className="w-fit mt-2 py-2 px-4 text-xs border border-white/20">
                   Restore Defaults
                 </CyberButton>
@@ -116,11 +183,13 @@ export function SettingsPage() {
               </div>
 
               <div className="flex gap-4">
-                {[
-                  { code: "EN", name: "English" },
-                  { code: "RU", name: "Русский" },
-                  { code: "KZ", name: "Қазақша" }
-                ].map(l => (
+                {(
+                  [
+                    { code: "EN", name: "English" },
+                    { code: "RU", name: "Русский" },
+                    { code: "KZ", name: "Қазақша" }
+                  ]
+                ).map(l => (
                   <button
                     key={l.code}
                     onClick={() => setLang(l.code)}

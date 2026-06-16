@@ -21,6 +21,7 @@ export function Home() {
     walletBalance, addWalletBalance, activatedPromoCodes, activatePromoCode: markPromoCodeActivated
   } = useSettings();
   const [showSupport, setShowSupport] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
   const [showPrizePool, setShowPrizePool] = useState(false);
   const [showPromoCode, setShowPromoCode] = useState(false);
   const [prizeTab, setPrizeTab] = useState<"daily" | "weekly" | "monthly">("daily");
@@ -125,7 +126,7 @@ export function Home() {
             
             <CyberButton 
               variant="secondary"
-              onClick={() => window.open("https://t.me/god_drones_club", "_blank")}
+              onClick={() => window.open("https://t.me/gameofdroneschat", "_blank")}
               className="flex-1 flex-col gap-2 h-full"
             >
               <ExternalLink className="w-6 h-6" />
@@ -237,6 +238,7 @@ export function Home() {
               </CyberButton>
               <CyberButton variant="ghost" className="w-full justify-start pl-6 border border-white/10 py-2 text-sm">
                 <Mail className="w-4 h-4 mr-3" /> help@god.kz
+                
               </CyberButton>
             </div>
           </div>
