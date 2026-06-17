@@ -5,7 +5,7 @@ import { CyberInput } from "../components/CyberInput";
 import { 
   Gamepad2, Calendar, Trophy, Ticket, 
   HelpCircle, Settings, Rocket,
-  X, Mail, MessageSquare, ExternalLink, CheckCircle2, AlertCircle
+  X, Mail, MessageSquare, ExternalLink, CheckCircle2, AlertCircle, Users
 } from "lucide-react";
 import { useSettings } from "../SettingsContext";
 import profilePlaceholder from "@/assets/images/profile/placeholder-user.jpg";
@@ -137,6 +137,24 @@ export function Home() {
 
         {/* Right Column */}
         <div className="w-2/5 flex flex-col gap-2 overflow-y-auto scrollbar-hide pr-2">
+          <CyberButton 
+            variant="ghost" 
+            onClick={() => navigate("/friends")}
+            className="justify-start border border-white/10 bg-white/5 hover:border-white/50 py-2 text-sm"
+          >
+            <Users className="w-4 h-4" />
+            <span className="ml-2">Friends</span>
+          </CyberButton>
+
+          <CyberButton 
+            variant="ghost" 
+            onClick={() => navigate("/clans")}
+            className="justify-start border border-white/10 bg-white/5 hover:border-white/50 py-2 text-sm"
+          >
+            <Users className="w-4 h-4 text-primary" />
+            <span className="ml-2">Clans</span>
+          </CyberButton>
+
           <CyberButton 
             variant="ghost" 
             onClick={() => navigate("/leaderboard")}

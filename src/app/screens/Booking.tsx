@@ -98,7 +98,7 @@ export function Booking() {
       <header className="px-4 py-4 flex items-center justify-between border-b border-white/10 bg-black/50 sticky top-0 z-20 backdrop-blur-md">
         <button 
           onClick={() => navigate("/home")}
-          className="w-10 h-10 flex items-center justify-center text-muted-foreground hover:text-white transition-colors"
+          className="w-10 h-10 rounded border border-white/20 bg-black/50 text-white backdrop-blur-sm flex items-center justify-center"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>

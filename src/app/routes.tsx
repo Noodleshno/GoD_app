@@ -9,6 +9,8 @@ import { Catalog } from "./screens/Catalog";
 import { Booking } from "./screens/Booking";
 import { Profile } from "./screens/Profile";
 import { SettingsPage } from "./screens/SettingsPage";
+import { Friends } from "./screens/Friends";
+import { Clans } from "./screens/Clans";
 
 function StartRoute() {
   const hasSeenOnboarding = localStorage.getItem("god_onboarding_seen") === "true";
@@ -30,6 +32,8 @@ export const router = createBrowserRouter([
       { path: "booking", Component: Booking },
       { path: "profile", Component: Profile },
       { path: "settings", Component: SettingsPage },
+      { path: "friends", Component: Friends },
+      { path: "clans", Component: Clans },
     ],
   },
 ]);
