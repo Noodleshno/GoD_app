@@ -169,7 +169,7 @@ export function Friends() {
   }
   
   return (
-    <div className="flex flex-col h-full p-6 gap-6">
+    <div className="flex-1 flex-col h-full p-6 gap-6 overflow-y-auto scrollbar-hide">
       <div className="flex items-center justify-between gap-4">
         <button
           onClick={() => navigate(-1)}

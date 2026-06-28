@@ -27,6 +27,7 @@ export function Booking() {
   const [reservedSlots, setReservedSlots] = useState<string[]>([]);
   const [reservationDetails, setReservationDetails] = useState<ReservationDetails | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [loading, setLoading] = useState(false);
   const activity = (location.state as { activity?: BookingActivity } | null)?.activity ?? {
     title: "Quick Race",
     category: "racing",
@@ -93,6 +94,11 @@ export function Booking() {
     setShowConfirmation(true);
   };
 
+  function handleRefresh() {
+    setLoading(true);
+    setTimeout(() => setLoading(false), 600);
+  }
+
   return (
     <div className="flex flex-col h-full bg-background relative z-10">
       <header className="px-4 py-4 flex items-center justify-between border-b border-white/10 bg-black/50 sticky top-0 z-20 backdrop-blur-md">
@@ -106,8 +112,11 @@ export function Booking() {
           Book Time
         </h2>
         <div className="flex items-center gap-2">
-          <button className="w-8 h-8 flex items-center justify-center text-primary hover:text-white transition-colors">
-            <RefreshCw className="w-4 h-4" />
+          <button
+            onClick={handleRefresh}
+            className="w-10 h-10 flex items-center justify-center text-primary hover:text-white transition-colors"
+          >
+            <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
           </button>
           <div className="flex items-center gap-1 bg-yellow-500/10 border border-yellow-500/30 px-2 py-1 rounded text-yellow-500 text-xs font-display font-bold">
             G {walletBalance.toLocaleString()}

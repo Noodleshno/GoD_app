@@ -19,31 +19,31 @@ export function Catalog() {
       duration: "15m",
       track: "Alpha Sector",
       status: "active",
-      img: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=2070&auto=format&fit=crop",
+      img: "",
       recommended: true
     },
     {
       id: 2,
-      title: "Freestyle Arena",
-      category: "freestyle",
+      title: "Drone Football",
+      category: "team",
       desc: "Open arena with obstacles for practicing stunts and maneuvers.",
       cost: "300 G",
       duration: "15m",
       track: "Neon Ring",
       status: "active",
-      img: "https://images.unsplash.com/photo-1517420879524-86d64ac2f339?q=80&w=2064&auto=format&fit=crop",
+      img: "",
       recommended: false
     },
     {
       id: 3,
-      title: "Combat Zone Alpha",
-      category: "combat",
+      title: "RoboSumo",
+      category: "pvp",
       desc: "Tactical team-based drone combat. Lasers enabled. High stakes.",
       cost: "1000 G",
       duration: "20m",
       track: "Underground",
       status: "unavailable",
-      img: "https://images.unsplash.com/photo-1506950266008-8e6da5fb3d05?q=80&w=2070&auto=format&fit=crop",
+      img: "",
       recommended: false
     }
   ];
@@ -83,7 +83,7 @@ export function Catalog() {
         
         {/* Filters */}
         <div className="flex gap-2 shrink-0 overflow-x-auto scrollbar-hide pb-2">
-          {["all", "racing", "freestyle", "combat"].map(cat => (
+          {["all", "racing", "team", "pvp"].map(cat => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
